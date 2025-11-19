@@ -19,12 +19,20 @@ function drawMatrix() {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   
-  ctx.fillStyle = '#00aaff';
-  ctx.font = fontSize + 'px Poppins';
   for(let i = 0; i < drops.length; i++) {
     const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+    
+    // التعديل: جعل القطرة الأولى (رأس المسار) بلون أبيض متوهج
+    if (drops[i] * fontSize > (canvas.height / 2) && Math.random() < 0.1) {
+        ctx.fillStyle = '#FFFFFF';
+    } else {
+        ctx.fillStyle = '#00aaff'; // اللون الأزرق الأساسي فقط
+    }
+
+    ctx.font = fontSize + 'px Poppins';
     ctx.fillText(text, i * fontSize, drops[i] * fontSize);
     
+    // إعادة تعيين القطرة عندما تصل إلى الأسفل مع فرصة عشوائية
     if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
       drops[i] = 0;
     }
@@ -83,14 +91,11 @@ window.addEventListener('load', () => {
   }
 });
 
-// Add click sound effect (optional)
+// Add click sound effect (optional) - تم حذف الأنماط المضمنة
 document.querySelectorAll('.link-button').forEach(button => {
   button.addEventListener('click', () => {
-    // You can add sound effects here if needed
-    button.style.transform = 'translateY(-2px) scale(0.98)';
-    setTimeout(() => {
-      button.style.transform = 'translateY(-2px)';
-    }, 100);
+    // يمكنك إضافة مؤثرات صوتية هنا إذا لزم الأمر
+    // تم حذف أنماط الـtransform لترك تأثيرها لـCSS الخارجي
   });
 });
 
@@ -107,6 +112,11 @@ document.addEventListener('keydown', (e) => {
   if (konamiCode.join(',') === konamiSequence.join(',')) {
     // Easter egg activated
     document.body.style.filter = 'hue-rotate(180deg)';
+    
+    // تحسين: عرض رسالة واضحة للمستخدم
+    alert("Easter Egg Activated! Welcome, Hacker!");
+    console.log("Konami Code Success: Access Granted!");
+    
     setTimeout(() => {
       document.body.style.filter = 'none';
     }, 3000);
