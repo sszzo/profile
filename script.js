@@ -61,11 +61,26 @@ function typeWriter(element, text, speed = 50) {
   type();
 }
 
-// Initialize typing effect on load
+// Initialize typing effect and music on load
 window.addEventListener('load', () => {
   const titleElement = document.querySelector('.title');
   const originalText = titleElement.textContent;
   typeWriter(titleElement, originalText, 100);
+
+  // 🎶 Music Autoplay Fix - محاولة تشغيل الصوت
+  const music = document.getElementById('background-music');
+  if (music) {
+    music.volume = 0.5; // تعيين مستوى الصوت
+    music.play().catch(error => {
+      // إذا تم حظر التشغيل التلقائي، حاول مرة أخرى عند أول تفاعل للمستخدم
+      const attemptPlay = () => {
+        music.play().catch(() => { /* تم التشغيل بنجاح */ });
+      };
+      // أضف مستمعًا لحدث النقر والضغط على المفاتيح (أول تفاعل)
+      document.addEventListener('click', attemptPlay, { once: true });
+      document.addEventListener('keydown', attemptPlay, { once: true });
+    });
+  }
 });
 
 // Add click sound effect (optional)
