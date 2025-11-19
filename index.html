@@ -4,107 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>صفوان جمعه</title>
-  
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+  <meta name="description" content="صفحة صفوان جمعه الشخصية. مبرمج، وكيل ايرثلنك، وخبير شبكات. تواصل مباشر عبر واتساب، فيسبوك، والمزيد.">
+  <link rel="icon" type="image/png" href="favicon.png"> <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <style>
-    /* الأنماط المخصصة التي لا يمكن تحقيقها بـ Tailwind وحدها */
-    :root {
-      --bg-primary: #0a0a0a;
-      --bg-secondary: #161616;
-      --backtrack-blue: #00aaff;
-      --backtrack-purple: #6600ff;
-      --backtrack-cyan: #00ffff;
-      --neon-red: #ff0040;
-    }
-    
-    body {
-      font-family: 'Poppins', sans-serif;
-      overflow-x: hidden;
-      background: var(--bg-primary);
-    }
-    
-    /* Animated Background */
-    .bg-animation {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: 
-        radial-gradient(circle at 20% 80%, var(--backtrack-blue) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, var(--backtrack-purple) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, var(--backtrack-cyan) 0%, transparent 50%);
-      opacity: 0.03;
-      animation: pulse 4s ease-in-out infinite alternate;
-    }
-    @keyframes pulse {
-      0% { opacity: 0.03; }
-      100% { opacity: 0.08; }
-    }
-    
-    /* Matrix Rain Effect */
-    #matrix-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      opacity: 2.15; /* تم زيادة الشفافية لإظهار الأكواد أكثر */
-    }
-    
-    /* Glitch Effect */
-    .glitch {
-      position: relative;
-    }
-    .glitch::before,
-    .glitch::after {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    .glitch::before {
-      animation: glitch-1 0.5s infinite;
-      color: var(--backtrack-purple);
-      z-index: -1;
-    }
-    .glitch::after {
-      animation: glitch-2 0.5s infinite;
-      color: var(--neon-red);
-      z-index: -2;
-    }
-    @keyframes glitch-1 {
-      0%, 14%, 15%, 49%, 50%, 99%, 100% { transform: translate(0); }
-      15%, 49% { transform: translate(-2px, 2px); }
-    }
-    @keyframes glitch-2 {
-      0%, 20%, 21%, 62%, 63%, 99%, 100% { transform: translate(0); }
-      21%, 62% { transform: translate(2px, -2px); }
-    }
-
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--bg-secondary);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--backtrack-blue);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--backtrack-purple);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  
 </head>
 <body class="text-white min-h-screen">
 
@@ -112,7 +19,7 @@
   <canvas id="matrix-canvas"></canvas>
 
   <div class="container mx-auto flex justify-center items-center min-h-screen p-4">
-    <div class="profile-card bg-gray-900 bg-opacity-95 rounded-2xl p-6 max-w-lg w-full text-center relative border-2 border-[#00aaff] shadow-2xl shadow-[rgba(0,170,255,0.3)] backdrop-blur-md">
+    <div class="profile-card bg-gray-900 bg-opacity-95 rounded-2xl p-6 max-w-lg w-full text-center relative border-2 border-[#00aaff] shadow-2xl backdrop-blur-md">
       
       <div class="terminal-header bg-gray-800 rounded-t-2xl m-[-1.5rem] mb-4 p-3 border-b border-[#00aaff] flex justify-between items-center font-['Montserrat']">
         <div class="flex gap-2">
@@ -123,42 +30,49 @@
         <div class="text-[#00aaff] text-sm font-bold">root@safwan:~$</div>
       </div>
 
-      <img src="img" alt="صورة شخصية لصفوان جمعه" class="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-4 border-[#00aaff] shadow-lg shadow-[rgba(0,170,255,0.3)] mb-4 mx-auto">
+      <img src="img" alt="صورة شخصية لصفوان جمعه" class="profile-img w-24 h-24 rounded-full object-cover border-4 border-[#00aaff] shadow-lg mb-4 mx-auto">
       
-      <h1 class="name glitch text-3xl font-black text-white mb-1" data-text="صفوان جمعه" style="font-family: 'Montserrat'; text-shadow: 0 0 20px #00aaff;">صفوان جمعه</h1>
+      <h1 class="name glitch text-3xl font-black text-white mb-1" data-text="صفوان جمعه">صفوان جمعه</h1>
       <p class="title text-[#00aaff] text-base font-medium mb-6">مبرمج | وكيل شركة ايرثلنك | خبير شبكات</p>
 
       <div class="links flex flex-col gap-2 mb-6">
-              <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="tel:07709739636">
-          <i class="fas fa-phone text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="tel:07709739636">
+          <i class="fas fa-phone text-lg transition-colors duration-300"></i> 
           اتصال مباشر
         </a>
-        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="https://wa.me/+9647709739636" target="_blank">
-          <i class="fab fa-whatsapp text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="https://wa.me/+9647709739636" target="_blank">
+          <i class="fab fa-whatsapp text-lg transition-colors duration-300"></i> 
           واتساب
         </a>
-        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="https://m.me/sszzo" target="_blank">
-          <i class="fab fa-facebook-messenger text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="https://m.me/sszzo" target="_blank">
+          <i class="fab fa-facebook-messenger text-lg transition-colors duration-300"></i> 
           ماسنجر
         </a>
-        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="https://www.facebook.com/sszzo" target="_blank">
-          <i class="fab fa-facebook-f text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="https://www.facebook.com/sszzo" target="_blank">
+          <i class="fab fa-facebook-f text-lg transition-colors duration-300"></i> 
           فيسبوك
         </a>
-        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="https://instagram.com/e_0_w" target="_blank">
-          <i class="fab fa-instagram text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="https://instagram.com/e_0_w" target="_blank">
+          <i class="fab fa-instagram text-lg transition-colors duration-300"></i> 
           إنستغرام
         </a>
-        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden hover:bg-opacity-50 hover:shadow-xl hover:shadow-[rgba(0,170,255,0.3)] hover:translate-y-[-2px]" href="mailto:sszzo.1998@gmail.com" target="_blank">
-          <i class="fas fa-envelope text-lg text-[#00aaff] transition-colors duration-300 hover:text-cyan-400 hover:text-shadow-lg hover:shadow-[0_0_10px_#00ffff]"></i> 
+        <a class="link-button flex items-center justify-center gap-3 py-3 px-4 bg-gray-800 bg-opacity-70 text-white text-base font-medium rounded-xl border border-[#00aaff] transition-all duration-300 relative overflow-hidden" href="mailto:sszzo.1998@gmail.com" target="_blank">
+          <i class="fas fa-envelope text-lg transition-colors duration-300"></i> 
           البريد الإلكتروني
         </a>
-
       </div>
+      
+
+      
+      <div class="footer">
+        Coded with 💙 and ☕ by Safwan
+      </div>
+
     </div>
   </div>
 
-  <audio id="background-music" loop src="song.mp3"></audio> <script src="script.js"></script>
+  <audio id="background-music" loop src="song.mp3"></audio> 
+  <script src="script.js"></script>
 
 </body>
 </html>
