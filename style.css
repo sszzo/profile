@@ -1,0 +1,346 @@
+:root {
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #161616;
+  --bg-card: rgba(10, 10, 10, 0.95);
+  --backtrack-blue: #00aaff; /* الأزرق الأساسي لنظام BackTrack */
+  --backtrack-purple: #6600ff; /* الأرجواني المستخدم في التدرجات */
+  --backtrack-cyan: #00ffff;
+  --text-primary: #ffffff;
+  --text-secondary: var(--backtrack-blue);
+  --text-muted: #888888;
+  --border-glow: var(--backtrack-blue);
+  --shadow-glow: rgba(0, 170, 255, 0.3);
+  --profile-glow: var(--backtrack-blue);
+  --profile-shadow: rgba(0, 170, 255, 0.2);
+  --neon-red: #ff0040;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated Background */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: 
+    radial-gradient(circle at 20% 80%, var(--backtrack-blue) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, var(--backtrack-purple) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, var(--backtrack-cyan) 0%, transparent 50%);
+  opacity: 0.03;
+  animation: pulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.03; }
+  100% { opacity: 0.08; }
+}
+
+/* Matrix Rain Effect */
+#matrix-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.15; /* تم تعديل الشفافية لتكون أكثر وضوحًا */
+}
+
+/* Main Container */
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.profile-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border-glow);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 450px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 
+    0 0 30px var(--shadow-glow),
+    inset 0 0 30px rgba(0, 170, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: cardGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes cardGlow {
+  0% { box-shadow: 0 0 30px var(--shadow-glow), inset 0 0 30px rgba(0, 170, 255, 0.1); }
+  100% { box-shadow: 0 0 50px var(--shadow-glow), inset 0 0 50px rgba(0, 170, 255, 0.15); }
+}
+
+/* Terminal Header - تم تحديثه ليتوافق مع HTML */
+.terminal-header {
+  background: var(--bg-secondary);
+  margin: -30px -30px 20px -30px;
+  padding: 15px 20px;
+  border-radius: 18px 18px 0 0;
+  border-bottom: 1px solid var(--border-glow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Profile Image */
+.profile-img {
+  width: 96px; /* w-24 */
+  height: 96px; /* h-24 */
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--profile-glow); /* border-4 */
+  box-shadow: 
+    0 0 30px var(--profile-glow),
+    inset 0 0 20px var(--profile-shadow);
+  margin-bottom: 16px; /* mb-4 */
+  animation: profilePulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes profilePulse {
+  0% { box-shadow: 0 0 30px var(--profile-glow), inset 0 0 20px var(--profile-shadow); }
+  100% { box-shadow: 0 0 50px var(--profile-glow), inset 0 0 30px var(--profile-shadow); }
+}
+
+/* Typography */
+.name {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 32px;
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 4px; /* mb-1 */
+  text-shadow: 0 0 20px var(--backtrack-blue);
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 20px var(--backtrack-blue); }
+  100% { text-shadow: 0 0 30px var(--backtrack-blue), 0 0 40px var(--backtrack-blue); }
+}
+
+.title {
+  color: var(--text-secondary);
+  font-size: 16px;
+  margin-bottom: 25px; /* mb-6 */
+  font-weight: 500;
+}
+
+.title::before {
+  content: "> ";
+  color: var(--backtrack-blue);
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* Links */
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* gap-2 */
+  margin-bottom: 24px; /* mb-6 */
+}
+
+.link-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px; /* gap-3 */
+  padding: 12px 16px; /* py-3 px-4 */
+  background: var(--bg-secondary); /* bg-gray-800 */
+  background: linear-gradient(45deg, var(--bg-secondary), rgba(0, 170, 255, 0.1));
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 16px; /* text-base */
+  font-weight: 500;
+  border-radius: 12px; /* rounded-xl */
+  border: 1px solid var(--border-glow);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.link-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 170, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.link-button:hover::before {
+  left: 120%; /* تحسين تأثير الوميض */
+  transition: left 0.6s ease;
+}
+
+.link-button:hover {
+  background: linear-gradient(45deg, rgba(0, 170, 255, 0.2), rgba(0, 170, 255, 0.1));
+  box-shadow: 
+    0 0 25px var(--shadow-glow),
+    inset 0 0 25px rgba(0, 170, 255, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--backtrack-blue);
+}
+
+.link-button i {
+  font-size: 18px; /* text-lg */
+  color: var(--backtrack-blue);
+  transition: all 0.3s ease;
+}
+
+.link-button:hover i {
+  color: var(--backtrack-purple);
+  text-shadow: 0 0 10px var(--backtrack-purple);
+}
+
+/* Skills Section - جديد */
+.skills-section {
+  text-align: right;
+  margin-top: 24px;
+  border-top: 1px solid rgba(0, 170, 255, 0.2);
+  padding-top: 15px;
+  margin-bottom: 15px;
+}
+
+.skills-section p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.skills-section span {
+  color: var(--backtrack-blue);
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  margin-right: 5px;
+}
+
+/* Footer - جديد */
+.footer {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0, 170, 255, 0.2);
+}
+
+.footer::before {
+  content: "< ";
+  color: var(--backtrack-blue);
+}
+
+.footer::after {
+  content: " />";
+  color: var(--backtrack-blue);
+}
+
+
+/* Glitch Effect */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch::before {
+  animation: glitch-1 0.5s infinite;
+  color: var(--backtrack-purple);
+  z-index: -1;
+}
+
+.glitch::after {
+  animation: glitch-2 0.5s infinite;
+  color: var(--neon-red);
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 14%, 15%, 49%, 50%, 99%, 100% { transform: translate(0); }
+  15%, 49% { transform: translate(-2px, 2px); }
+}
+
+@keyframes glitch-2 {
+  0%, 20%, 21%, 62%, 63%, 99%, 100% { transform: translate(0); }
+  21%, 62% { transform: translate(2px, -2px); }
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .profile-card {
+    padding: 25px 15px;
+    margin: 10px;
+  }
+  
+  .terminal-header {
+    margin: -25px -15px 15px -15px;
+    padding: 12px 15px;
+  }
+  
+  .name {
+    font-size: 24px;
+  }
+  
+  .title {
+    font-size: 14px;
+  }
+  
+  .link-button {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--backtrack-blue);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--backtrack-purple);
+}
