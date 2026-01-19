@@ -3,218 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفوان جمعه | Modern Glass</title>
+    <title>صفوان جمعه | Deep Space</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Space+Grotesk:wght@300;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        :root {
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --accent: #00d2ff;
-        }
-
         body {
-            background: #050505;
-            font-family: 'Cairo', sans-serif;
+            background: #020617;
             color: white;
+            font-family: 'Cairo', sans-serif;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden;
+            margin: 0;
         }
 
-        /* Animated Liquid Background */
-        .liquid-bg {
+        /* Star Background Effect */
+        .stars-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, #050505, #0a192f, #1e1b4b, #050505);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
             z-index: -2;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* Floating Orbs */
-        .orb {
+        .star {
             position: absolute;
+            background: white;
             border-radius: 50%;
-            filter: blur(80px);
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Nebula Glow */
+        .nebula {
+            position: fixed;
+            width: 600px; height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+            filter: blur(60px);
             z-index: -1;
-            opacity: 0.4;
-            animation: moveOrb 20s infinite alternate;
-        }
-        .orb-1 { width: 400px; height: 400px; background: #3b82f6; top: -100px; right: -100px; }
-        .orb-2 { width: 300px; height: 300px; background: #7c3aed; bottom: -50px; left: -50px; animation-delay: -5s; }
-
-        @keyframes moveOrb {
-            from { transform: translate(0, 0); }
-            to { transform: translate(100px, 100px); }
+            animation: move 20s infinite alternate;
         }
 
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 30px;
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(10%, 10%); }
+        }
+
+        /* Card Style */
+        .space-card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 40px;
+            padding: 50px 30px;
             width: 90%;
-            max-width: 400px;
-            padding: 40px 25px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 420px;
+            backdrop-filter: blur(15px);
+            text-align: center;
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.1);
         }
 
-        .profile-img-container {
-            width: 90px;
-            height: 90px;
-            margin: 0 auto 20px;
+        .profile-ring {
+            width: 110px; height: 110px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
             position: relative;
         }
 
-        .profile-img-container::after {
+        .profile-ring::before {
             content: '';
             position: absolute;
-            inset: -5px;
+            inset: -10px;
             border-radius: 50%;
-            background: linear-gradient(45deg, #00d2ff, #92fe9d);
-            z-index: -1;
-            animation: rotateSpin 4s linear infinite;
+            border: 1px dashed rgba(139, 92, 246, 0.4);
+            animation: spin 10s linear infinite;
         }
 
-        @keyframes rotateSpin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .btn-modern {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--glass-border);
-            padding: 16px;
+        .btn-space {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 18px;
             margin-bottom: 12px;
-        }
-
-        .btn-modern:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
-        }
-
-        .btn-modern i {
-            width: 40px;
-            height: 40px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            font-size: 18px;
-            color: var(--accent);
+            gap: 15px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+        }
+
+        .btn-space:hover {
+            background: rgba(139, 92, 246, 0.15);
+            border-color: #8b5cf6;
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .btn-space i {
+            font-size: 20px;
+            color: #c084fc;
         }
 
         .btn-location {
-            background: linear-gradient(135deg, rgba(0, 210, 255, 0.1), rgba(146, 254, 157, 0.1));
-            border: 1px solid rgba(0, 210, 255, 0.3);
+            background: rgba(139, 92, 246, 0.1);
+            border-color: rgba(139, 92, 246, 0.4);
         }
 
-        .status-badge {
-            font-family: 'Outfit', sans-serif;
+        .coordinate-text {
+            font-family: 'Space Grotesk', sans-serif;
             font-size: 10px;
-            letter-spacing: 1.5px;
-            color: #92fe9d;
-            border: 1px solid rgba(146, 254, 157, 0.3);
-            padding: 2px 10px;
-            border-radius: 100px;
-            display: inline-block;
-            margin-top: 5px;
+            color: #a78bfa;
+            letter-spacing: 3px;
+            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-    <div class="liquid-bg"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
+    <div class="stars-container" id="stars"></div>
+    <div class="nebula" style="top: -100px; right: -100px;"></div>
+    <div class="nebula" style="bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(236, 72, 153, 0.15) 0%, transparent 70%);"></div>
 
-    <div class="glass-card">
-        <!-- Header -->
-        <div class="text-center mb-8">
-            <div class="profile-img-container">
-                <div class="w-full h-full bg-slate-900 rounded-full flex items-center justify-center text-3xl overflow-hidden">
-                    <i class="fas fa-user-tie text-slate-400"></i>
-                </div>
+    <div class="space-card">
+        <!-- Profile -->
+        <div class="profile-ring">
+            <div class="w-full h-full bg-slate-950 rounded-full flex items-center justify-center text-4xl">
+                <i class="fas fa-user-astronaut text-slate-400"></i>
             </div>
-            <h1 class="text-3xl font-extrabold tracking-tight">صفوان جمعه</h1>
-            <div class="status-badge uppercase font-bold">Verified Professional</div>
-            <p class="text-slate-400 text-xs mt-3 px-4 leading-relaxed">
-                متخصص في تقنيات الشبكات المتطورة وحلول الأنظمة والبرمجة الحديثة.
-            </p>
         </div>
 
-        <!-- Buttons List -->
-        <div class="space-y-3">
-            
-            <a href="tel:+9647709739636" class="btn-modern group">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-phone-alt"></i>
-                    <span class="font-semibold">اتصال مباشر</span>
-                </div>
-                <i class="fas fa-chevron-left text-[10px] opacity-30 group-hover:opacity-100 group-hover:translate-x-[-5px] transition-all bg-transparent"></i>
+        <h1 class="text-4xl font-black mb-2 tracking-tight">صفوان جمعه</h1>
+        <p class="text-sm text-purple-300 mb-8 font-light">Network Engineer | Cyber Sentinel</p>
+
+        <!-- Actions -->
+        <div class="flex flex-col">
+            <a href="tel:+9647709739636" class="btn-space">
+                <i class="fas fa-headset"></i>
+                <span class="font-bold flex-grow text-right">اتصال مباشر</span>
             </a>
 
-            <a href="https://wa.me/+9647709739636" target="_blank" class="btn-modern group">
-                <div class="flex items-center gap-3">
-                    <i class="fab fa-whatsapp"></i>
-                    <span class="font-semibold">واتساب</span>
-                </div>
-                <i class="fas fa-chevron-left text-[10px] opacity-30 group-hover:opacity-100 transition-all bg-transparent"></i>
+            <a href="https://wa.me/+9647709739636" target="_blank" class="btn-space">
+                <i class="fab fa-whatsapp"></i>
+                <span class="font-bold flex-grow text-right">مراسلة فورية</span>
             </a>
 
-            <a href="https://www.facebook.com/xooov" target="_blank" class="btn-modern group">
-                <div class="flex items-center gap-3">
-                    <i class="fab fa-facebook-f"></i>
-                    <span class="font-semibold">فيسبوك</span>
-                </div>
-                <i class="fas fa-chevron-left text-[10px] opacity-30 group-hover:opacity-100 transition-all bg-transparent"></i>
+            <a href="https://www.facebook.com/xooov" target="_blank" class="btn-space">
+                <i class="fab fa-facebook-messenger"></i>
+                <span class="font-bold flex-grow text-right">فيسبوك</span>
             </a>
 
-            <a href="https://instagram.com/e_0_w" target="_blank" class="btn-modern group">
-                <div class="flex items-center gap-3">
-                    <i class="fab fa-instagram"></i>
-                    <span class="font-semibold">إنستغرام</span>
-                </div>
-                <i class="fas fa-chevron-left text-[10px] opacity-30 group-hover:opacity-100 transition-all bg-transparent"></i>
+            <a href="https://instagram.com/e_0_w" target="_blank" class="btn-space">
+                <i class="fab fa-instagram"></i>
+                <span class="font-bold flex-grow text-right">إنستغرام</span>
             </a>
 
-            <!-- الموقع هو الزر الأخير كما طلبت -->
-            <a href="https://maps.app.goo.gl/MBNDKYY4rWUwZ5eM6?g_st=ac" target="_blank" class="btn-modern btn-location group">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-map-marked-alt"></i>
-                    <span class="font-semibold">موقع الشبكة (Maps)</span>
-                </div>
-                <i class="fas fa-location-arrow text-[10px] opacity-50 group-hover:opacity-100 transition-all bg-transparent"></i>
+            <!-- الموقع في نهاية القائمة -->
+            <a href="https://maps.app.goo.gl/MBNDKYY4rWUwZ5eM6?g_st=ac" target="_blank" class="btn-space btn-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span class="font-bold flex-grow text-right">موقع الشبكة (Maps)</span>
             </a>
-
         </div>
 
-        <!-- Footer -->
-        <div class="mt-8 text-center">
-            <p class="text-[9px] text-slate-500 uppercase tracking-[4px]">Secure Digital Profile</p>
-        </div>
+        <div class="coordinate-text uppercase">Sector: Nineveh / Iraq</div>
     </div>
 
+    <script>
+        // Generate random stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 3 + 'px';
+            star.style.width = size;
+            star.style.height = size;
+            star.style.top = Math.random() * 100 + '%';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+            starsContainer.appendChild(star);
+        }
+    </script>
 </body>
 </html>
 
