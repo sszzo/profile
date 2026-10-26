@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>البحث الذكي في نتائج الـ PDF</title>
+<style>
+:root{
+  --bg:#0f1115; --card:#171a21; --card2:#1e222b; --line:#2a2f3a;
+  --text:#e8eaf0; --muted:#9aa3b2; --primary:#38bdf8; --primary-d:#0ea5e9;
+  --ok:#10b981; --ok-d:#059669; --warn:#f59e0b; --err:#ef4444;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;
+  line-height:1.6; min-height:100vh;
+  padding:max(16px,env(safe-area-inset-top)) 16px max(24px,env(safe-area-inset-bottom));
+}
+.wrap{max-width:760px;margin:0 auto}
+header{text-align:center;margin:12px 0 24px}
+header h1{margin:0;font-size:1.5rem;color:var(--primary)}
+header p{margin:6px 0 0;color:var(--muted);font-size:.9rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.step{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-weight:600}
+.step b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--primary);color:#04202e;font-size:.85rem}
+.drop{
+  display:block;border:2px dashed var(--line);border-radius:12px;padding:26px 14px;text-align:center;
+  cursor:pointer;transition:.15s;background:var(--card2);color:var(--muted)
+}
+.drop:hover,.drop.over{border-color:var(--primary);color:var(--text)}
+.drop strong{display:block;color:var(--text);margin-bottom:4px}
+.drop input{display:none}
+/* قائمة الملفات */
+.flist{margin-top:12px;display:flex;flex-direction:column;gap:8px}
+.frow{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.frow-top{display:flex;align-items:center;gap:8px}
+.fname{flex:1;min-width:0;font-weight:600;font-size:.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:right}
+.fmeta{color:var(--muted);font-size:.78rem;margin-top:2px}
+.fmeta.err{color:#fecaca}.fmeta.warn{color:#fde68a}
+.fbar{height:6px;background:var(--bg);border-radius:99px;overflow:hidden;margin-top:8px}
+.fbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--primary-d),var(--primary));transition:width .15s}
+.row{display:flex;gap:10px}
+input[type=text]{
+  flex:1;min-width:0;background:var(--card2);border:1px solid var(--line);color:var(--text);
+  border-radius:10px;padding:12px 14px;font-size:1rem;font-family:inherit
+}
+input[type=text]:focus{outline:none;border-color:var(--primary)}
+input[type=text]:disabled{opacity:.5}
+button{
+  font-family:inherit;font-size:.95rem;border:0;border-radius:10px;padding:11px 18px;cursor:pointer;
+  color:#fff;background:var(--primary-d);transition:.15s;white-space:nowrap
+}
+button:hover:not(:disabled){filter:brightness(1.1)}
+button:disabled{opacity:.45;cursor:not-allowed}
+button.ok{background:var(--ok-d)}
+button.ghost{background:var(--card2);border:1px solid var(--line);color:var(--text)}
+button.sm{padding:5px 10px;font-size:.8rem}
+.msg{padding:12px 14px;border-radius:10px;font-size:.9rem;margin-top:12px;display:none}
+.msg.err{display:block;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.5);color:#fecaca}
+.msg.warn{display:block;background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.5);color:#fde68a}
+.msg.info{display:block;background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.4);color:#bae6fd}
+.summary{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:12px;color:var(--muted);font-size:.9rem}
+.summary b{color:var(--primary)}
+.fhead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:16px 0 8px;padding:8px 12px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.3);border-radius:10px;font-size:.9rem}
+.fhead:first-child{margin-top:0}
+.fhead .n{direction:ltr;text-align:right;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.fhead .c{color:var(--muted);font-size:.8rem;white-space:nowrap}
+.res{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px}
+.res-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.badge{background:rgba(56,189,248,.15);border:1px solid rgba(56,189,248,.5);color:#bae6fd;padding:3px 12px;border-radius:99px;font-weight:600}
+.badge.loose{background:rgba(245,158,11,.15);border-color:rgba(245,158,11,.5);color:#fde68a}
+.cnt{color:var(--muted);font-size:.8rem}
+.snip{margin:10px 0;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:.88rem;color:var(--muted);word-break:break-word}
+mark{background:#facc15;color:#1a1400;border-radius:3px;padding:0 3px}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btns button{flex:1}
+.more{width:100%}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;z-index:50;padding:max(10px,env(safe-area-inset-top)) 10px max(10px,env(safe-area-inset-bottom))}
+.modal.show{display:flex}
+.mbox{margin:auto;width:100%;max-width:880px;max-height:100%;background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;overflow:hidden}
+.mhead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.mhead strong{font-size:.9rem;min-width:0}
+.mbody{overflow:auto;padding:10px;background:#2b2f3a;flex:1;text-align:center}
+.mbody canvas{width:100%;height:auto;background:#fff;border-radius:4px}
+.mfoot{display:flex;gap:8px;padding:10px 14px;border-top:1px solid var(--line)}
+.mfoot button{flex:1}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px;margin-inline-end:6px}
+@keyframes s{to{transform:rotate(360deg)}}
+footer{text-align:center;color:var(--muted);font-size:.75rem;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>البحث الذكي في نتائج الطلاب</h1>
+    <p>ارفع ملف PDF أو عدة ملفات، ابحث بالرقم الامتحاني أو الاسم، واطبع الصفحة المطلوبة فقط</p>
+  </header>
+
+  <section class="card">
+    <p class="step"><b>1</b> اختر ملفات الـ PDF</p>
+    <label class="drop" id="drop">
+      <strong>اضغط هنا لاختيار ملف أو أكثر أو اسحبها وأفلتها</strong>
+      <span>يتم تحليل الملفات داخل جهازك مباشرة ولا تُرفع إلى أي خادم</span>
+      <input type="file" id="file" accept="application/pdf,.pdf" multiple>
+    </label>
+    <div class="flist" id="flist"></div>
+    <div class="msg" id="loadMsg"></div>
+  </section>
+
+  <section class="card">
+    <p class="step"><b>2</b> ابحث</p>
+    <div class="row">
+      <input type="text" id="q" placeholder="الرقم الامتحاني أو اسم الطالب..." autocomplete="off" enterkeyhint="search" disabled>
+      <button id="go" disabled>بحث</button>
+    </div>
+    <div class="msg" id="searchMsg"></div>
+  </section>
+
+  <section class="card" id="resultsCard" style="display:none">
+    <div class="summary" id="summary"></div>
+    <div id="results"></div>
+  </section>
+
+  <footer>يعمل بالكامل على المتصفح • لا يحتاج PHP ولا رفع ملفات</footer>
+</div>
+
+<!-- Preview modal -->
+<div class="modal" id="modal">
+  <div class="mbox">
+    <div class="mhead">
+      <strong id="mTitle"></strong>
+      <button class="ghost" id="mClose">إغلاق ✕</button>
+    </div>
+    <div class="mbody" id="mBody"><canvas id="mCanvas"></canvas></div>
+    <div class="mfoot">
+      <button class="ghost" id="mPrev">السابق ›</button>
+      <button class="ok" id="mPrint">🖨 طباعة هذه الصفحة</button>
+      <button class="ghost" id="mNext">‹ التالي</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============ تحميل مكتبة PDF.js (محلياً إن وُجدت، وإلا من الإنترنت) ============ */
+const V = '3.11.174';
+const SOURCES = [
+  { lib: 'pdfjs/pdf.min.js', worker: 'pdfjs/pdf.worker.min.js' },
+  { lib: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${V}/pdf.min.js`,
+    worker: `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${V}/pdf.worker.min.js` }
+];
+function loadScript(src){
+  return new Promise((res, rej) => {
+    const s = document.createElement('script');
+    s.src = src; s.onload = res; s.onerror = () => rej(new Error(src));
+    document.head.appendChild(s);
+  });
+}
+async function initPdfJs(){
+  for (const s of SOURCES){
+    try {
+      await loadScript(s.lib);
+      if (window.pdfjsLib){ pdfjsLib.GlobalWorkerOptions.workerSrc = s.worker; return true; }
+    } catch(e){}
+  }
+  return false;
+}
+
+/* ============ أدوات ============ */
+const $ = id => document.getElementById(id);
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const nextFrame = () => new Promise(r => requestAnimationFrame(() => r()));
+
+/* تطبيع النص: يوحّد الحروف العربية المشكّلة/المتصلة والأرقام الهندية */
+function base(s){
+  return s.normalize('NFKC')
+    .replace(/[\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g, '')
+    .replace(/[\u064B-\u065F\u0670\u0640]/g, '')
+    .replace(/[\u0660-\u0669]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x0660 + 48))
+    .replace(/[\u06F0-\u06F9]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x06F0 + 48))
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+/* طيّ الحروف (حرف مقابل حرف حتى تبقى المواضع متطابقة مع النص المعروض) */
+const fold = s => s.replace(/[أإآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه');
+const rev = s => [...s].reverse().join('');
+
+function buildMatcher(raw){
+  const qd = base(raw);
+  const q  = fold(qd);
+  const qs = q.replace(/\s/g, '');
+  const isNum = /^\d+$/.test(qs);
+  return { q, qs, rq: rev(qs), isNum, re: isNum ? new RegExp('(?<![0-9])' + qs + '(?![0-9])', 'g') : null };
+}
+
+/* ============ الحالة ============ */
+/* files: [{id,name,size,doc,pages:[{d,n,s}],chars,status:'loading|ready|error',prog,msg,warn}] */
+let files = [], uid = 0, queue = Promise.resolve();
+let lastMatcher = null, lastResults = [], lastLoose = false, modalIdx = -1, renderToken = 0;
+
+const readyFiles = () => files.filter(f => f.status === 'ready');
+const mb = n => (n / 1048576).toFixed(1);
+
+/* ============ قائمة الملفات ============ */
+function renderFiles(){
+  const box = $('flist');
+  box.innerHTML = files.map(f => {
+    let meta = '';
+    if (f.status === 'loading') meta = `<div class="fmeta">${mb(f.size)} ميغابايت • ${f.msg || 'جاري التحليل...'}</div>`;
+    else if (f.status === 'error') meta = `<div class="fmeta err">${esc(f.msg)}</div>`;
+    else meta = `<div class="fmeta ${f.warn ? 'warn' : ''}">${f.doc.numPages} صفحة • ${mb(f.size)} ميغابايت${f.warn ? ' • ' + esc(f.warn) : ''}</div>`;
+    const bar = f.status === 'loading' ? `<div class="fbar"><i id="fp${f.id}" style="width:${f.prog}%"></i></div>` : '';
+    return `<div class="frow"><div class="frow-top"><span class="fname" title="${esc(f.name)}">📄 ${esc(f.name)}</span>
+      <button class="ghost sm" data-rm="${f.id}">حذف ✕</button></div>${meta}${bar}</div>`;
+  }).join('');
+  refreshUI();
+}
+function refreshUI(){
+  const n = readyFiles().length;
+  $('q').disabled = !n; $('go').disabled = !n;
+  const m = $('loadMsg');
+  if (n && !files.some(f => f.status === 'loading')){
+    m.className = 'msg info';
+    m.textContent = n === 1
+      ? 'الملف جاهز. اكتب الرقم الامتحاني أو الاسم وابدأ البحث.'
+      : `${n} ملفات جاهزة. سيتم البحث في جميعها وعرض النتائج لكل ملف.`;
+  } else if (!files.length){
+    m.className = 'msg';
+  }
+}
+function removeFile(id){
+  const f = files.find(x => x.id === id); if (!f) return;
+  try { f.doc && f.doc.destroy(); } catch(e){}
+  files = files.filter(x => x.id !== id);
+  closeModal();
+  lastResults = [];
+  $('resultsCard').style.display = 'none';
+  renderFiles();
+}
+
+/* ============ تحليل الملفات ============ */
+function addFiles(list){
+  const arr = [...list];
+  if (!arr.length) return;
+  queue = queue.then(() => indexFiles(arr)).catch(() => {});
+}
+
+async function indexFiles(list){
+  const loadMsg = $('loadMsg');
+  let skipped = 0;
+  for (const file of list){
+    if (!/\.pdf$/i.test(file.name) && file.type !== 'application/pdf'){ skipped++; continue; }
+    if (files.some(x => x.name === file.name && x.size === file.size)) continue;
+    const f = { id: ++uid, name: file.name, size: file.size, doc: null, pages: [], chars: 0, status: 'loading', prog: 0, msg: 'جاري الفتح...', warn: '' };
+    files.push(f); renderFiles();
+    await nextFrame();
+
+    try {
+      const data = new Uint8Array(await file.arrayBuffer());
+      f.doc = await pdfjsLib.getDocument({ data }).promise;
+    } catch(e){
+      f.status = 'error';
+      f.msg = e && e.name === 'PasswordException' ? 'الملف محمي بكلمة مرور ولا يمكن قراءته.' : 'تعذّر فتح الملف، تأكد أنه PDF سليم.';
+      renderFiles(); continue;
+    }
+
+    const n = f.doc.numPages;
+    try {
+      for (let i = 1; i <= n; i++){
+        if (!files.includes(f)) return; // حُذف أثناء التحليل
+        const page = await f.doc.getPage(i);
+        const tc = await page.getTextContent();
+        const d = base(tc.items.map(it => it.str).join(' '));
+        const nn = fold(d);
+        f.pages.push({ d, n: nn, s: nn.replace(/\s/g, '') });
+        f.chars += d.length;
+        page.cleanup();
+        if (i % 3 === 0 || i === n){
+          f.prog = Math.round(i / n * 100);
+          const bar = $('fp' + f.id); if (bar) bar.style.width = f.prog + '%';
+          await nextFrame();
+        }
+      }
+    } catch(e){
+      f.status = 'error'; f.msg = 'حدث خطأ أثناء قراءة صفحات الملف.'; renderFiles(); continue;
+    }
+    if (f.chars < 20) f.warn = 'ملف صور (ممسوح ضوئياً) بلا نص قابل للبحث، يلزم OCR';
+    f.status = 'ready';
+    renderFiles();
+  }
+  if (skipped){
+    loadMsg.className = 'msg err';
+    loadMsg.textContent = skipped === 1 ? 'تم تجاهل ملف ليس بصيغة PDF.' : `تم تجاهل ${skipped} ملفات ليست بصيغة PDF.`;
+  }
+  if (readyFiles().length) $('q').focus();
+}
+
+/* ============ البحث ============ */
+function search(){
+  const raw = $('q').value;
+  const msg = $('searchMsg'); msg.className = 'msg';
+  const m = buildMatcher(raw);
+  if (!m.qs){ msg.className = 'msg err'; msg.textContent = 'أدخل الرقم الامتحاني أو الاسم أولاً.'; return; }
+  const ready = readyFiles();
+  if (!ready.length) return;
+
+  const results = [];
+  ready.forEach(f => f.pages.forEach((p, i) => {
+    let idx = -1, count = 0;
+    if (m.isNum){
+      m.re.lastIndex = 0;
+      let r;
+      while ((r = m.re.exec(p.n))){ if (idx < 0) idx = r.index; count++; }
+    } else {
+      let from = 0, k;
+      while ((k = p.n.indexOf(m.q, from)) !== -1){ if (idx < 0) idx = k; count++; from = k + m.q.length; }
+    }
+    if (count) results.push({ f, page: i + 1, count, idx, len: m.q.length, loose: false });
+  }));
+
+  let loose = false;
+  if (!results.length){
+    // بحث تقريبي: يتجاهل المسافات ويجرّب النص المعكوس (بعض ملفات PDF تعكس الحروف العربية)
+    ready.forEach(f => f.pages.forEach((p, i) => {
+      if (p.s.includes(m.qs) || p.s.includes(m.rq)) results.push({ f, page: i + 1, count: 1, idx: -1, loose: true });
+    }));
+    loose = results.length > 0;
+  }
+  lastMatcher = m; lastResults = results; lastLoose = loose;
+  renderResults(raw.trim());
+}
+
+function renderResults(label){
+  const card = $('resultsCard'), box = $('results'), sum = $('summary');
+  card.style.display = 'block';
+  box.innerHTML = '';
+  if (!lastResults.length){
+    sum.innerHTML = `<span>نتائج البحث عن: <b>${esc(label)}</b></span><span>${readyFiles().length} ملف</span>`;
+    box.innerHTML = '<div class="msg warn" style="display:block;margin:0">لم يتم العثور على أي تطابق في الملفات. جرّب كتابة جزء أقصر من الاسم أو تحقق من الرقم.</div>';
+    return;
+  }
+
+  // تجميع النتائج حسب الملف (مع الحفاظ على الفهرس العام لكل نتيجة)
+  const groups = [];
+  lastResults.forEach((r, i) => {
+    let g = groups.find(x => x.f === r.f);
+    if (!g){ g = { f: r.f, items: [] }; groups.push(g); }
+    g.items.push({ r, i });
+  });
+
+  sum.innerHTML = `<span>نتائج البحث عن: <b>${esc(label)}</b></span>
+    <span>${lastResults.length} صفحة • ${groups.length} ${groups.length === 1 ? 'ملف' : 'ملفات'}${lastLoose ? ' • تطابق تقريبي' : ''}</span>`;
+  if (groups.length > 1){
+    const note = document.createElement('div');
+    note.className = 'msg info'; note.style.cssText = 'display:block;margin:0 0 14px';
+    note.textContent = `وُجد الاسم في ${groups.length} ملفات، ولكل ملف أزرار المعاينة والطباعة الخاصة به.`;
+    box.appendChild(note);
+  }
+
+  const LIMIT = 30;
+  const makeCard = ({ r, i }) => {
+    const p = r.f.pages[r.page - 1];
+    let snip = '';
+    if (r.idx >= 0){
+      const a = Math.max(0, r.idx - 45), b = Math.min(p.d.length, r.idx + r.len + 45);
+      snip = (a > 0 ? '…' : '') + esc(p.d.slice(a, r.idx)) + '<mark>' + esc(p.d.slice(r.idx, r.idx + r.len)) + '</mark>' + esc(p.d.slice(r.idx + r.len, b)) + (b < p.d.length ? '…' : '');
+    }
+    const el = document.createElement('div');
+    el.className = 'res';
+    el.innerHTML = `
+      <div class="res-top"><span class="badge ${r.loose ? 'loose' : ''}">صفحة ${r.page}</span>
+      <span class="cnt">${r.count > 1 ? r.count + ' تطابقات' : (r.loose ? 'تطابق تقريبي' : 'تطابق واحد')}</span></div>
+      ${snip ? `<div class="snip">${snip}</div>` : ''}
+      <div class="btns" style="margin-top:10px">
+        <button class="ghost" data-act="view" data-i="${i}">👁 معاينة</button>
+        <button class="ok" data-act="print" data-i="${i}">🖨 طباعة هذه الصفحة</button>
+      </div>`;
+    return el;
+  };
+
+  groups.forEach(g => {
+    const head = document.createElement('div');
+    head.className = 'fhead';
+    head.innerHTML = `<span class="n" title="${esc(g.f.name)}">📄 ${esc(g.f.name)}</span><span class="c">${g.items.length} ${g.items.length === 1 ? 'صفحة' : 'صفحات'}</span>`;
+    box.appendChild(head);
+    g.items.slice(0, LIMIT).forEach(it => box.appendChild(makeCard(it)));
+    if (g.items.length > LIMIT){
+      const more = document.createElement('button');
+      more.className = 'ghost more'; more.textContent = `عرض باقي نتائج هذا الملف (${g.items.length - LIMIT})`;
+      more.onclick = () => {
+        const frag = document.createDocumentFragment();
+        g.items.slice(LIMIT).forEach(it => frag.appendChild(makeCard(it)));
+        more.replaceWith(frag);
+      };
+      box.appendChild(more);
+    }
+  });
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+/* ============ عرض الصفحة وتمييز النتيجة ============ */
+function itemHit(str, m, loose){
+  const t = fold(base(str)); if (!t) return false;
+  if (m.isNum) return t.search(m.re) >= 0;
+  const ts = t.replace(/\s/g, '');
+  if (!loose) return t.includes(m.q) || (ts.length >= 3 && m.qs.includes(ts));
+  return ts.includes(m.qs) || ts.includes(m.rq) || (ts.length >= 3 && (m.qs.includes(ts) || m.rq.includes(ts)));
+}
+
+async function renderPage(canvas, doc, pageNo, scale, hl){
+  const page = await doc.getPage(pageNo);
+  const vp = page.getViewport({ scale });
+  canvas.width = Math.floor(vp.width);
+  canvas.height = Math.floor(vp.height);
+  const ctx = canvas.getContext('2d');
+  await page.render({ canvasContext: ctx, viewport: vp }).promise;
+  if (hl && lastMatcher){
+    const tc = await page.getTextContent();
+    ctx.fillStyle = 'rgba(250,204,21,.45)';
+    for (const it of tc.items){
+      if (!it.str || !itemHit(it.str, lastMatcher, lastLoose)) continue;
+      const t = pdfjsLib.Util.transform(vp.transform, it.transform);
+      const h = Math.hypot(t[2], t[3]);
+      ctx.fillRect(t[4], t[5] - h * 0.9, it.width * scale, h * 1.2);
+    }
+  }
+  page.cleanup();
+}
+
+async function openModal(i){
+  if (i < 0 || i >= lastResults.length) return;
+  modalIdx = i;
+  const r = lastResults[i], tok = ++renderToken;
+  $('modal').classList.add('show');
+  $('mTitle').innerHTML = `<span dir="ltr">${esc(r.f.name)}</span><br>صفحة ${r.page} (${i + 1} من ${lastResults.length})`;
+  $('mPrev').disabled = i === 0; $('mNext').disabled = i === lastResults.length - 1;
+  const canvas = $('mCanvas');
+  canvas.style.opacity = .4;
+  const page = await r.f.doc.getPage(r.page);
+  const vp1 = page.getViewport({ scale: 1 });
+  const w = ($('mBody').clientWidth - 20) * (window.devicePixelRatio || 1);
+  const scale = Math.min(3, Math.max(1, w / vp1.width));
+  if (tok !== renderToken) return;
+  await renderPage(canvas, r.f.doc, r.page, scale, true);
+  if (tok === renderToken) canvas.style.opacity = 1;
+}
+function closeModal(){ renderToken++; $('modal').classList.remove('show'); }
+
+/* ============ الطباعة (صفحة واحدة فقط بدون تمييز) ============ */
+async function printPage(f, pageNo, btn){
+  const old = btn ? btn.innerHTML : '';
+  if (btn){ btn.disabled = true; btn.innerHTML = '<span class="spin"></span>جاري التحضير'; }
+  try {
+    const page = await f.doc.getPage(pageNo);
+    const v1 = page.getViewport({ scale: 1 });
+    const land = v1.width > v1.height;
+    const scale = Math.min(2.5, 4000 / Math.max(v1.width, v1.height));
+    const c = document.createElement('canvas');
+    await renderPage(c, f.doc, pageNo, scale, false);
+    const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.95));
+    const url = URL.createObjectURL(blob);
+
+    const fr = document.createElement('iframe');
+    fr.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden';
+    document.body.appendChild(fr);
+    const d = fr.contentWindow.document;
+    d.open();
+    d.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>${esc(f.name)} - صفحة ${pageNo}</title>
+      <style>@page{size:${land ? 'landscape' : 'portrait'};margin:0}html,body{margin:0;padding:0}img{display:block;width:100%;height:auto;break-inside:avoid;break-after:avoid}</style>
+      </head><body><img src="${url}"></body></html>`);
+    d.close();
+    const img = d.querySelector('img');
+    const go = () => {
+      try { fr.contentWindow.focus(); fr.contentWindow.print(); }
+      catch(e){ window.open(url, '_blank'); }
+      setTimeout(() => { fr.remove(); URL.revokeObjectURL(url); }, 120000);
+    };
+    if (img.complete) go(); else { img.onload = go; img.onerror = () => window.open(url, '_blank'); }
+  } catch(e){
+    alert('تعذّرت تهيئة الصفحة للطباعة.');
+  } finally {
+    if (btn){ btn.disabled = false; btn.innerHTML = old; }
+  }
+}
+
+/* ============ الأحداث ============ */
+$('file').addEventListener('change', e => { addFiles(e.target.files); e.target.value = ''; });
+const drop = $('drop');
+['dragover','dragenter'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.add('over'); }));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => { e.preventDefault(); drop.classList.remove('over'); }));
+drop.addEventListener('drop', e => addFiles(e.dataTransfer.files));
+
+$('flist').addEventListener('click', e => {
+  const b = e.target.closest('button[data-rm]'); if (b) removeFile(+b.dataset.rm);
+});
+
+$('go').addEventListener('click', search);
+$('q').addEventListener('keydown', e => { if (e.key === 'Enter') search(); });
+
+$('results').addEventListener('click', e => {
+  const b = e.target.closest('button[data-act]'); if (!b) return;
+  const i = +b.dataset.i;
+  if (b.dataset.act === 'view') openModal(i);
+  else printPage(lastResults[i].f, lastResults[i].page, b);
+});
+$('mClose').onclick = closeModal;
+$('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+$('mPrev').onclick = () => openModal(modalIdx - 1);
+$('mNext').onclick = () => openModal(modalIdx + 1);
+$('mPrint').onclick = e => printPage(lastResults[modalIdx].f, lastResults[modalIdx].page, e.currentTarget);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+/* ============ تشغيل ============ */
+(async () => {
+  const ok = await initPdfJs();
+  if (!ok){
+    const m = $('loadMsg');
+    m.className = 'msg err';
+    m.innerHTML = 'تعذّر تحميل مكتبة PDF.js. تأكد من اتصالك بالإنترنت، أو ضع الملفين <code>pdf.min.js</code> و<code>pdf.worker.min.js</code> داخل مجلد <code>pdfjs</code> بجانب هذا الملف.';
+    $('file').disabled = true;
+  }
+})();
+</script>
+</body>
+</html>
