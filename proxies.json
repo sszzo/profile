@@ -1,0 +1,63 @@
+{
+    "channel": "sszzw",
+    "updated_at": "2026-11-17T05:13:29+00:00",
+    "count": 8,
+    "proxies": [
+        {
+            "id": 1,
+            "server": "ir-ir.billblog.co.uk",
+            "port": "8443",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=ir-ir.billblog.co.uk&port=8443&secret=EERighJJvXrFGRMCIMjdCQ&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 2,
+            "server": "asa.travobet.site",
+            "port": "9443",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=asa.travobet.site&port=9443&secret=ee78db693a0d664a63b9f52b095314b270706574726f766963682e7275&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 3,
+            "server": "109.70.74.225",
+            "port": "8882",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=109.70.74.225&port=8882&secret=736503e4c763fb45a49ecb0d79b29d49&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 4,
+            "server": "109.70.74.168",
+            "port": "8882",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=109.70.74.168&port=8882&secret=fa09633c332e2a34f03c95553909d4e9&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 5,
+            "server": "formuse.new.tg",
+            "port": "8880",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=formuse.new.tg&port=8880&secret=2cf6777b57d6b42378e1c727c339c63c&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 6,
+            "server": "71v.le.ezk.4.6b.eg.k.roseprox.xyz",
+            "port": "8443",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=71v.le.ezk.4.6b.eg.k.roseprox.xyz&port=8443&secret=eeNI0VVoN2N3qBrz9BcsrQ&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 7,
+            "server": "49.12.20.45",
+            "port": "443",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=49.12.20.45&port=443&secret=7l984oosSBbGySPf1NVjDgE=&bot=@sszzw_bot&channel=@sszzw"
+        },
+        {
+            "id": 8,
+            "server": "37.27.84.178",
+            "port": "8443",
+            "type": "mtproto",
+            "tg_url": "tg://proxy?server=37.27.84.178&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@sszzw_bot&channel=@sszzw"
+        }
+    ]
+}
