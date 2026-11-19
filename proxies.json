@@ -1,140 +1,126 @@
 {
     "channel": "mtpro_xyz",
-    "updated_at": "2026-11-18T08:07:38+00:00",
-    "count": 19,
+    "updated_at": "2026-11-19T04:51:41+00:00",
+    "count": 17,
     "proxies": [
         {
             "id": 1,
-            "server": "stream.amaster.xyz",
-            "port": "8443",
+            "server": "web.mangoseason7.co.uk",
+            "port": "2096",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=stream.amaster.xyz&port=8443&secret=EERighJJvXrFGRMCIMJdCQ==&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=web.mangoseason7.co.uk&port=2096&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 2,
-            "server": "ram7.co.uk",
-            "port": "4455",
+            "server": "65.109.209.3",
+            "port": "8880",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=ram7.co.uk&port=4455&secret=dd104462821249bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=65.109.209.3&port=8880&secret=fb1e92755273356dbdcc76e04cfa2b41&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 3,
-            "server": "naznazi.co.uk",
-            "port": "4455",
+            "server": "194.60.228.224",
+            "port": "2096",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=naznazi.co.uk&port=4455&secret=dd104462821249bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=194.60.228.224&port=2096&secret=79e344818749bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 4,
-            "server": "85.133.194.23",
-            "port": "8443",
+            "server": "156.229.161.249",
+            "port": "5201",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=85.133.194.23&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=156.229.161.249&port=5201&secret=ee3a51554a1c8542cc36572fd59c2f63f4617a7572652e6d6963726f736f66742e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 5,
-            "server": "85.133.194.127",
-            "port": "8443",
+            "server": "harbor.velvetwindow.cc",
+            "port": "443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=85.133.194.127&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=harbor.velvetwindow.cc&port=443&secret=eed09fb30e9ba945e3eb272875413c8c94686172626f722e76656c76657477696e646f772e6363&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 6,
-            "server": "85.133.194.113",
-            "port": "8443",
+            "server": "fr.internet4free.org",
+            "port": "443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=85.133.194.113&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=fr.internet4free.org&port=443&secret=dd3734eba41c93d0154af5016413b6a00e&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 7,
-            "server": "85.133.194.111",
+            "server": "188.34.192.90",
             "port": "8443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=85.133.194.111&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=188.34.192.90&port=8443&secret=EERighJJvXrFGRMCIMJdCQ==&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 8,
-            "server": "85.133.194.11",
+            "server": "178.104.70.108",
             "port": "8443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=85.133.194.11&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=178.104.70.108&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 9,
-            "server": "49.13.174.169",
-            "port": "8443",
+            "server": "proxy2.rayzatech.site",
+            "port": "8445",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=49.13.174.169&port=8443&secret=dd104462821249bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=proxy2.rayzatech.site&port=8445&secret=eefb8693c530954691a4cb8413692bb3987261797a61746563682e73697465&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 10,
-            "server": "156.229.161.164",
-            "port": "5200",
+            "server": "mokatebe-275hs.ramezan-83.ir",
+            "port": "2020",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=156.229.161.164&port=5200&secret=ee25befcb1e06e96433a2fdfed5e0bafdd617a7572652e6d6963726f736f66742e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=mokatebe-275hs.ramezan-83.ir&port=2020&secret=AAAAAAAAAAAAAAAAAAAAAA==&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 11,
-            "server": "nyakawai.shop",
-            "port": "443",
+            "server": "93.115.20.4",
+            "port": "8443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=nyakawai.shop&port=443&secret=eeec15a78c3842e866c302c8526175a68c7975672d6c696e6b2e7275&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=93.115.20.4&port=8443&secret=dd4d1904787e99a86dc23b12eb306f2712&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 12,
-            "server": "gamecenter.amaster.xyz",
-            "port": "8443",
+            "server": "srv-sfnjxv.nether.cfd",
+            "port": "443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=gamecenter.amaster.xyz&port=8443&secret=EERighJJvXrFGRMCIMJdCQ==&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=srv-sfnjxv.nether.cfd&port=443&secret=ee2963ae650074baec7e12802a367b039e646c2e676f6f676c652e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 13,
-            "server": "65.109.177.71",
-            "port": "8443",
+            "server": "phone-samsung.imalz.info",
+            "port": "443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=65.109.177.71&port=8443&secret=eeNEgYdJvXrFGRMCIMJdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=phone-samsung.imalz.info&port=443&secret=ee1603010200010001fc030386e24c3add6d656469612e737465616d706f77657265642e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 14,
-            "server": "185.4.115.33",
-            "port": "443",
+            "server": "fandogh.co.uk",
+            "port": "4455",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=185.4.115.33&port=443&secret=ee1f2c902450d574ab98eaab1a707010613138352e342e3131352e3333&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=fandogh.co.uk&port=4455&secret=dd104462821249bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 15,
-            "server": "51.20.92.101",
-            "port": "8443",
+            "server": "dast.salemr.ir",
+            "port": "443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=51.20.92.101&port=8443&secret=eea95abbafe96bfa2636f031b3bb75cf0e7765622e727562696b612e6972&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=dast.salemr.ir&port=443&secret=ee1603010200010001fc030386e24c3add626973636f7474692e79656b74616e65742e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 16,
-            "server": "heremit.larval.nonce.rubricate.textbook.watchpinoyteleserye.com",
-            "port": "1250",
+            "server": "51.75.118.75",
+            "port": "20124",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=heremit.larval.nonce.rubricate.textbook.watchpinoyteleserye.com&port=1250&secret=eeeaa279236535275f4071a1279335415773332e616d617a6f6e6177732e636f6d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=51.75.118.75&port=20124&secret=55a70f331db6dddd499b8634ac4085e6&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         },
         {
             "id": 17,
-            "server": "ddd.pikov.online",
-            "port": "443",
-            "type": "mtproto",
-            "tg_url": "tg://proxy?server=ddd.pikov.online&port=443&secret=7nBxXAND1xkpeXcXjYd4hLpsaC1pbi1mMTAyLjFlMTAwLm5ldA&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
-        },
-        {
-            "id": 18,
-            "server": "51.77.103.79",
+            "server": "159.69.16.4",
             "port": "8443",
             "type": "mtproto",
-            "tg_url": "tg://proxy?server=51.77.103.79&port=8443&secret=39ca4e970290319940425781aedbea3d&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
-        },
-        {
-            "id": 19,
-            "server": "ir-ir.billblog.co.uk",
-            "port": "8443",
-            "type": "mtproto",
-            "tg_url": "tg://proxy?server=ir-ir.billblog.co.uk&port=8443&secret=EERighJJvXrFGRMCIMjdCQ&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
+            "tg_url": "tg://proxy?server=159.69.16.4&port=8443&secret=79e344818749bd7ac519130220c25d09&bot=@mtpro_xyz_bot&channel=@mtpro_xyz"
         }
     ]
 }
